@@ -28,6 +28,7 @@ gem 'simple_form'
 gem 'haml'
 gem 'devise'
 gem 'bootstrap-sass'
+gem 'heroku'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

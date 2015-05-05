@@ -6,20 +6,18 @@
 	= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
 	= javascript_include_tag 'application', 'data-turbolinks-track' => true
 	= csrf_meta_tags
-	- flash.each do |name, msg|
-		= content_tag :div, msg, class: "alert"
 
 %body
 	%nav.navbar.navbar-default
 		.container
 			.navbar-brand= link_to "Like That", root_path
-			%ul.nav.navbar-nav.navbar-right
+			.ul.nav.navbar-nav.navbar-right
 				- if user_signed_in?
 					%li= link_to "New Item", new_item_path
 					%li= link_to "Edit Account", edit_user_registration_path
 					%li= link_to "Sign Out", destroy_user_session_path, method: :delete
 				- else
-					%li= link_to "Sign In", root_path
+					%li= link_to "Sign In", new_user_session_path
 					%li= link_to "Sign Up", new_user_registration_path
 	.container
 		- flash.each do |name, msg|

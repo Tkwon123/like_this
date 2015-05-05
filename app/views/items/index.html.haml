@@ -1,24 +1,24 @@
 .page-header
   %h1 Like this (or like that)
 
-%table.table.table-striped
-  %thead
-    %tr
-      %th Item
-      %th Body
+%table.table.table-bordered
 
   %tbody
     - @items.each do |item|
       %tr
         %td= item.item
-        %td= item.body
-
-        %td= link_to 'Like', like_item_path(item), method: :put
-        %td= item.get_upvotes.size
-        %td= link_to 'Dislike', dislike_item_path(item), method: :put
-        %td= item.get_downvotes.size
-        %br
+        - if current_user.voted_as_when_voted_for item
+          %td= link_to raw('<strong><i>Like</i></strong>'), like_item_path(item), method: :put
+          %td= item.get_upvotes.size
+          %td= link_to 'Dislike', dislike_item_path(item), method: :put
+          %td= item.get_downvotes.size
+        - else 
+          %td= link_to 'Like', like_item_path(item), method: :put
+          %td= item.get_upvotes.size
+          %td= link_to raw('<strong><i>Dislike</i></strong>'), dislike_item_path(item), method: :put
+          %td= item.get_downvotes.size
         - if user_signed_in?
           %td= link_to 'Edit', edit_item_path(item)
           %td= link_to 'Delete', item, method: :delete, data: { confirm: 'Are you sure?'}
         %td.text-muted Item submitted: #{item.created_at.strftime("%B %d, %Y")} by #{item.user.email}
+

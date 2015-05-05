@@ -1,0 +1,29 @@
+%table.table.table-bordered
+  %tbody
+  - @items.each do |item|
+    %tr
+      %td= item.item
+      / Need user to be logged in to vote
+      - if user_signed_in? 
+        /Bolding the header of whatever was voted last
+        - if (current_user.voted_as_when_voted_for item) == nil
+          %td= link_to raw('Like'), like_item_path(item), method: :put
+          %td= item.get_upvotes.size
+          %td= link_to 'Dislike', dislike_item_path(item), method: :put
+          %td= item.get_downvotes.size
+        - elsif (current_user.voted_as_when_voted_for item) #if voted in the positive
+          %td= link_to raw('<strong><i>Like</i></strong>'), like_item_path(item), method: :put
+          %td= item.get_upvotes.size
+          %td= link_to 'Dislike', dislike_item_path(item), method: :put
+          %td= item.get_downvotes.size
+        - else  #if voted in the negative
+          %td= link_to 'Like', like_item_path(item), method: :put
+          %td= item.get_upvotes.size
+          %td= link_to raw('<strong><i>Dislike</i></strong>'), dislike_item_path(item), method: :put
+          %td= item.get_downvotes.size
+      /Still give them the user details
+      %td.text-muted Item submitted: #{item.created_at.strftime("%B %d, %Y")} by #{item.user.email}
+        
+      - if item.user == current_user
+        %td= link_to 'Edit', edit_item_path(item)
+        %td= link_to 'Delete', item, method: :delete, data: {confirm: 'Are you sure?'}

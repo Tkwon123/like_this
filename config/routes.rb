@@ -6,7 +6,12 @@ Rails.application.routes.draw do
       put 'dislike', to: 'items#downvote'
     end
   end
+
+  #bootstrap the votes or items
   get 'reset', to: 'items#resetvotes'
+  get 'item_reset', to: 'items#resetitems'
+
+  get 'vote_reset', to: 'items#votereset'
   root "items#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

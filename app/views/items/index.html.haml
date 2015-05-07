@@ -9,14 +9,22 @@
 	%br
 	- if user_signed_in?
 
-		%h4
-			These items are no good. Lets start over!
+		- if @counter.votes_for.size >= (User.all.count)/2.round(3)
 			%br
-			%br
-			= link_to "RESET BUTTON", reset_path, class: "btn btn-default"
-			
+			%p Ready to Reset!
+			= link_to "RESET VOTES", reset_path, class: "btn btn-default"
+			= link_to "RESET ITEMS", item_reset_path, class: "btn btn-default"
+		- else
+			%p
+				These items are no good :( I say we start over!
+				%br
+				%br
+				= link_to "Vote Reset", vote_reset_path, class: "btn btn-default"
+				%br
+				.text-muted
+					(Oh but we make decisions by conensus! We need at least 50% of user votes. We currently have
+					= @counter.votes_for.size
+					of 
+					= (User.all.count)/2.round(2)
+					votes)
 
-		/ .text-muted
-		/ 	Oh but we make decisions by conensus and need at least
-		/ 	= (User.all.count)/2.round(3)
-		/ 	votes

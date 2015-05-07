@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
   # GET /items.json
   def index
     @items = Item.all.order("cached_votes_up DESC")
+    set_counter
   end
 
   # GET /items/1
@@ -73,14 +74,32 @@ class ItemsController < ApplicationController
     redirect_to :back
   end
 
+  def votereset
+    set_counter
+    @counter.liked_by current_user
+    redirect_to root_path
+  end
+
   def resetvotes
     @users = User.all
     @items = Item.all
-
+    set_counter
+    reset_counter
     @users.each do |user|
       @items.each do |item|
         item.unvote_by user
       end
+    end
+    redirect_to root_path
+    flash[:notice]="Votes have been reset"
+  end
+
+  def resetitems
+    set_counter
+    reset_counter
+    @items = Item.all
+    @items.each do |item|
+      item.destroy
     end
     redirect_to root_path
   end
@@ -89,6 +108,15 @@ class ItemsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = Item.find(params[:id])
+    end
+
+    def set_counter
+      @counter = Counter.find_by(id:99999) #an unlikely ID number
+    end
+
+    def reset_counter
+      @counter.destroy
+      Counter.new(id:99999, count:0).save 
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

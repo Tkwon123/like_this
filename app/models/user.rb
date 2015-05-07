@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
 	has_many :items
+	has_many :counter
 	acts_as_voter
 	
 end

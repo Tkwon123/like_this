@@ -6,3 +6,12 @@
 
 	= render 'table'
 	
+	%br
+	%h3 
+		These items are no good. Lets start over!
+		= link_to "Reset!", reset_path
+		%br
+	.text-muted
+		We make decisions by conensus and need at least
+		= (User.all.count)/2.round(3)
+		votes

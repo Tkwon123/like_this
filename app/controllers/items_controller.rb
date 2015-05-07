@@ -73,6 +73,18 @@ class ItemsController < ApplicationController
     redirect_to :back
   end
 
+  def resetvotes
+    @users = User.all
+    @items = Item.all
+
+    @users.each do |user|
+      @items.each do |item|
+        item.unvote_by user
+      end
+    end
+    redirect_to root_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_item

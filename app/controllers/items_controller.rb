@@ -80,6 +80,12 @@ class ItemsController < ApplicationController
     redirect_to root_path
   end
 
+  def unvotereset
+    set_counter
+    @counter.unliked_by current_user
+    redirect_to root_path
+  end
+    
   def resetvotes
     @users = User.all
     @items = Item.all

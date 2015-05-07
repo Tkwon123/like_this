@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'reset', to: 'items#resetvotes'
   get 'item_reset', to: 'items#resetitems'
 
+  get 'unvote_reset', to: 'items#unvotereset'
   get 'vote_reset', to: 'items#votereset'
   root "items#index"
   # The priority is based upon order of creation: first created -> highest priority.

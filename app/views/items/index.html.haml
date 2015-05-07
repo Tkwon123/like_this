@@ -11,15 +11,18 @@
 
 		- if @counter.votes_for.size >= (User.all.count)/2.round(3)
 			%br
-			%p Ready to Reset!
+			%p <strong> THE POWER TO RESET IS YOURS! </strong>
 			= link_to "RESET VOTES", reset_path, class: "btn btn-default"
-			= link_to "RESET ITEMS", item_reset_path, class: "btn btn-default"
+			= link_to "CLEAR ALL ITEMS ON THE LIST", item_reset_path, class: "btn btn-default"
 		- else
 			%p
-				These items are no good :( I say we start over!
+				These items are no good :(
 				%br
 				%br
-				= link_to "Vote Reset", vote_reset_path, class: "btn btn-default"
+				- if @counter.voted_on_by? current_user
+					= link_to "On second thought, lets make this work!", unvote_reset_path, class: "btn btn-default"
+				- else
+					= link_to "I say we start over!", vote_reset_path, class: "btn btn-default"
 				%br
 				.text-muted
 					(Oh but we make decisions by conensus! We need at least 50% of user votes. We currently have

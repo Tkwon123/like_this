@@ -1,0 +1,19 @@
+- if @counter.voted_on_by? current_user
+	I'm having second thoughts...
+	%br
+	%br
+	= link_to "Lets make this work!", unvote_reset_path, class: "btn btn-default"
+- else
+	These items are no good :(
+	%br
+	%br
+	= link_to "I say we start over!", vote_reset_path, class: "btn btn-default"
+%br
+.text-muted
+	Oh but we make decisions by consensus! 
+	%br
+	We need at least 50% of user votes. (Currently have
+	= @counter.votes_for.size
+	of 
+	= (User.all.count)/2.round(2)
+	votes)

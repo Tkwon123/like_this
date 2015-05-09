@@ -117,6 +117,7 @@ class ItemsController < ApplicationController
     end
 
     def set_counter
+
       if Counter.find_by(id:99999, count:0) #see if the counter exists on db reset
         @counter = Counter.find_by(id:99999) #create an unlikely ID number 
       else

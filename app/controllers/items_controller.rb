@@ -4,8 +4,8 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @items = Item.all.order("cached_votes_up DESC")
     set_counter
+    @items = Item.all.order("cached_votes_up DESC")
   end
 
   # GET /items/1
@@ -117,7 +117,11 @@ class ItemsController < ApplicationController
     end
 
     def set_counter
-      @counter = Counter.find_by(id:99999) #an unlikely ID number
+      if Counter.find_by(id:99999, count:0) #see if the counter exists on db reset
+        @counter = Counter.find_by(id:99999) #create an unlikely ID number 
+      else
+        @counter = Counter.new(id:99999, count:0).save #if the db has reset recently
+      end
     end
 
     def reset_counter
